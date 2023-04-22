@@ -1,8 +1,12 @@
 class MapquestService
-  def get_coordinates(location)
+  def get_location(location)
     get_url("/geocoding/v1/address?key=#{ENV['MAPQUEST_API_KEY']}&location=#{location}")
   end
 
+  def get_coordinates(location)
+    location_data = get_location(location)
+    location_data[:results].first[:locations].first[:latLng]
+  end
   private
 
   def conn

@@ -9,7 +9,7 @@ describe 'WeatherApiService' do
           lng = -95.36952
 
           response = WeatherApiService.new.get_forecast(lat, lng)
-# binding.pry
+
           expect(response).to be_a(Hash)
           expect(response).to have_key(:location)
           expect(response[:location]).to be_a(Hash)
