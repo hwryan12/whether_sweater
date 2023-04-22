@@ -12,6 +12,7 @@ gem "bootsnap", require: false
 gem "faraday"
 gem "figaro"
 gem "jsonapi-serializer"
+gem 'bcrypt'
 
 group :development, :test do
   gem "rspec-rails"
