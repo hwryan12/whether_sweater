@@ -20,8 +20,6 @@ group :development, :test do
   gem "launchy"
   gem 'shoulda-matchers'
   gem 'orderly'
-  gem 'factory_bot_rails'
-  gem "faker"
   gem "pry"
 end
 
