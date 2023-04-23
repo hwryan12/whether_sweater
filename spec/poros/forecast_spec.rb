@@ -146,6 +146,7 @@ RSpec.describe Forecast do
       }
     }
   end
+  
   describe 'attributes' do
     let!(:forecast) { Forecast.new(forecast_data) }
     it 'has a null id, current_weather, daily_weather, and hourly_weather' do
