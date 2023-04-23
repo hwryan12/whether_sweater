@@ -1,4 +1,4 @@
-class MapquestService
+class GeocodeService
   def get_location(location)
     get_url("/geocoding/v1/address?key=#{ENV['MAPQUEST_API_KEY']}&location=#{location}")
   end
