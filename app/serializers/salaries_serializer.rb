@@ -4,7 +4,6 @@ class SalariesSerializer
   end
 
   def serialize_salaries
-    # binding.pry
     if @data.nil?
       { error: 'No data found' }
     else

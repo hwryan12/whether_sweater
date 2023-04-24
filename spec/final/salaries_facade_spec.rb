@@ -7,7 +7,7 @@ RSpec.describe SalariesFacade, type: :facade do
       it 'returns a tech salaries for a given city as serialzed JSON' do
         VCR.use_cassette('salaries_facade') do
           salaries = SalariesFacade.new.get_tech_salaries(city)
-          # binding.pry
+          
           expect(salaries).to be_a(Salary)
           expect(salaries.destination).to be_a(String)
           expect(salaries.summary).to be_a(String)
