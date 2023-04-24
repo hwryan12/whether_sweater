@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe 'POST /api/v0/sessions', type: :request do
   context 'when the request is valid' do
-    let!(:user) { create(:user, email: 'whatever@example.com', password: 'password') }
+    let!(:user) { create(:user, email: 'whatever@example.com', password: 'password', password_confirmation: 'password') }
     it 'returns the user with an api key and a 200 code' do
       post '/api/v0/sessions', params: { email: user.email, password: user.password }, headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' }, as: :json
       

@@ -8,7 +8,7 @@ class RoadTrip
   
   def initialize(directions, forecast)
     @id = nil
-    @type = 'roadtrip'
+    @type = 'road_trip'
     @start_city = directions[:route][:locations][0][:adminArea5] + ', ' + directions[:route][:locations][0][:adminArea3]
     @end_city = directions[:route][:locations][1][:adminArea5] + ', ' + directions[:route][:locations][1][:adminArea3]
     @travel_time = directions[:route][:formattedTime]

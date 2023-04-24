@@ -29,17 +29,17 @@ http_interactions:
       X-Ratelimit-Limit-2628000:
       - '15000'
       X-Ratelimit-Remaining-2628000:
-      - '14714'
+      - '14716'
       Ratelimit-Limit:
       - '15000'
       Ratelimit-Remaining:
-      - '14714'
+      - '14716'
       Ratelimit-Reset:
       - '2210370'
       X-Powered-By:
       - MapQuest
       X-Request-Id:
-      - 9c515b70-e297-11ed-9d1f-81cfd40efb05
+      - 9c3b3b60-e297-11ed-9d1f-81cfd40efb05
       Access-Control-Allow-Origin:
       - "*"
       X-Transaction-Count:
