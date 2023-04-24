@@ -72,7 +72,6 @@ RSpec.describe  Salary do
   describe  'instantiation' do
     it 'exists' do
       salary = Salary.new(location, weather) 
-      # binding.pry
       expect(salary).to be_a(Salary)
       expect(salary.destination).to eq('Denver')
       expect(salary.summary).to eq('Partly cloudy')

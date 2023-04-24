@@ -4,8 +4,7 @@ class SalariesFacade
     salaries = TeleportService.new.get_city_salaries(city)
     location_coords = GeocodeService.new.get_coordinates(location)
     weather = WeatherApiService.new.get_forecast(location_coords[:lat], location_coords[:lng])
-
-    SalariesSerializer.new(salaries, weather).serialize_salaries
+    Salary.new(salaries, weather)
   end
   
   private
