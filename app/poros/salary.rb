@@ -1,14 +1,26 @@
 class Salary
+  attr_reader :destination, 
+              :summary, 
+              :temperature, 
+              :jobs
 
   def initialize(location, weather)
-    binding.pry
     @destination = weather[:location][:name]
     @summary = weather[:current][:condition][:text]
-    @temperature = weather[:current][:temp_f]
-    @jobs = filtered_jobs(location)
+    @temperature = formatted_temperature(weather[:current][:temp_f])
+    @jobs = tech_jobs(location)
   end
 
   private
+
+  def formatted_temperature(temperature)
+    "#{temperature.round} F"
+  end
+
+  def formatted_salary(salary)
+    formatted_salary = format('%.2f', salary).gsub(/\d(?=(\d{3})+\.)/, '\0,')
+    "$#{formatted_salary}"
+  end
 
   def filtered_jobs(location)
     job_titles = [
@@ -30,8 +42,8 @@ class Salary
     filtered_jobs(location).map do |job|
       { 
         title: job[:job][:title],
-        min: job[:salary_percentiles][:percentile_25],
-        max: job[:salary_percentiles][:percentile_75]
+        min: formatted_salary(job[:salary_percentiles][:percentile_25]),
+        max: formatted_salary(job[:salary_percentiles][:percentile_75])
       }
     end
   end
