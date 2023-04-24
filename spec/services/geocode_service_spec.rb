@@ -1,12 +1,12 @@
 require 'rails_helper'
 
-describe 'MapquestService' do
+describe 'GeocodeService' do
   context 'instance methods' do
     context '#get_location' do
       it 'returns the location data' do
-        VCR.use_cassette('mapquest_service') do
+        VCR.use_cassette('geocode_service') do
           location = 'Houston, TX'
-          response = MapquestService.new.get_location(location)
+          response = GeocodeService.new.get_location(location)
 
           expect(response).to be_a(Hash)
           expect(response).to have_key(:results)
@@ -25,7 +25,7 @@ describe 'MapquestService' do
       it 'returns the coordinates for a location' do
         VCR.use_cassette('mapquest_service') do
           location = 'Houston, TX'
-          response = MapquestService.new.get_coordinates(location)
+          response = GeocodeService.new.get_coordinates(location)
 
           expect(response).to be_a(Hash)
           expect(response).to have_key(:lat)

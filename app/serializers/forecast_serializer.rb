@@ -4,7 +4,6 @@ class ForecastSerializer
   end
 
   def serialize_weather
-    # binding.pry
     if @data.nil?
       { error: 'No data found' }
     else
