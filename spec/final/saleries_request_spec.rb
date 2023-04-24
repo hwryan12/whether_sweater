@@ -8,7 +8,7 @@ RSpec.describe 'GET /api/v1/salaries?destination=:location', type: :request do
         city = 'Houston, TX'
         get "/api/v1/salaries?destination=#{city}"
         json_response = JSON.parse(response.body, symbolize_names: true)
-      
+ 
         expect(response).to have_http_status(:ok)
         expect(response.content_type).to eq('application/json; charset=utf-8')
 
