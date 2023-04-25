@@ -19,7 +19,7 @@ RSpec.describe 'POST /api/v0/users', type: :request do
       expect(response.content_type).to eq('application/json; charset=utf-8')
 
       json_response = JSON.parse(response.body, symbolize_names: true)
-  
+      
       expect(json_response).to be_a(Hash)
       expect(json_response).to have_key(:data)
       expect(json_response[:data]).to be_a(Hash)
@@ -33,6 +33,47 @@ RSpec.describe 'POST /api/v0/users', type: :request do
       expect(json_response[:data][:attributes][:email]).to be_a(String)
       expect(json_response[:data][:attributes]).to have_key(:api_key)
       expect(json_response[:data][:attributes][:api_key]).to be_a(String)
+    end
+  end
+  
+  context 'when the request is invalid - passwords mismatch' do
+    let!(:user_params) do
+      {
+        user: {
+          email: 'email@email.com',
+          password: 'password',
+          password_confirmation: 'wrong_password'
+        }
+      }
+    end
+    it 'returns a 422 code and an error message when the passwords do not match' do
+      post '/api/v0/users', params: user_params, headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' }, as: :json
+  
+      json_response = JSON.parse(response.body, symbolize_names: true)
+      
+      expect(response).to have_http_status(:unprocessable_entity) 
+      expect(json_response[:error]).to eq("Password confirmation doesn't match Password")
+    end
+  end
+
+  context 'when the request is invalid - existing email' do
+    let!(:existing_user) { create(:user, email: 'email@email.com', password: '12345', password_confirmation: '12345') }
+    let!(:user_params) do
+      {
+        user: {
+          email: 'email@email.com',
+          password: 'password',
+          password_confirmation: 'password'
+        }
+      }
+    end
+    it 'returns a 422 code and an error message when the email already exists' do
+      post '/api/v0/users', params: user_params, headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' }, as: :json
+  
+      json_response = JSON.parse(response.body, symbolize_names: true)
+      
+      expect(response).to have_http_status(:unprocessable_entity) 
+      expect(json_response[:error]).to eq("Email has already been taken")
     end
   end
 end
