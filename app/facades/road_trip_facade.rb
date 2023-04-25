@@ -1,8 +1,8 @@
 class RoadTripFacade
   def get_road_trip(origin, destination)
     directions = DirectionsService.new.get_directions(origin, destination)
-    arrival_time = arrival_time(directions[:route][:formattedTime])
-    forecast = get_weather_at_destination(destination, arrival_time)
+    eta = arrival_time(directions[:route][:formattedTime])
+    forecast = get_weather_at_destination(destination, eta)
     RoadTrip.new(directions, forecast)
   end
 
