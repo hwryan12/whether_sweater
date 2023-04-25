@@ -9,7 +9,7 @@ RSpec.describe 'GET /api/v0/forecast', type: :request do
 
       expect(response).to have_http_status(:ok)
       expect(response.content_type).to eq('application/json; charset=utf-8')
-
+      
       json_response = JSON.parse(response.body, symbolize_names: true)
 
       expect(json_response).to be_a(Hash)
@@ -79,6 +79,41 @@ RSpec.describe 'GET /api/v0/forecast', type: :request do
         expect(hour).to have_key(:icon)
         expect(hour[:icon]).to be_a(String)
       end
+    end
+
+    it 'should not send unnecessary data', :vcr do
+      location_city = "Houston"
+      location_state = "TX"
+      get "/api/v0/forecast?location=#{location_city},#{location_state}"
+      json_response = JSON.parse(response.body, symbolize_names: true)
+      
+      expect(json_response[:data][:attributes][:current_weather]).to_not have_key(:temp_c)
+      expect(json_response[:data][:attributes][:current_weather]).to_not have_key(:wind_mph)
+      expect(json_response[:data][:attributes][:current_weather]).to_not have_key(:wind_kph)
+      expect(json_response[:data][:attributes][:current_weather]).to_not have_key(:wind_degree)
+      expect(json_response[:data][:attributes][:current_weather]).to_not have_key(:wind_dir)
+      expect(json_response[:data][:attributes][:current_weather]).to_not have_key(:pressure_mb)
+      expect(json_response[:data][:attributes][:current_weather]).to_not have_key(:pressure_in)
+      expect(json_response[:data][:attributes][:current_weather]).to_not have_key(:precip_mm)
+      expect(json_response[:data][:attributes][:current_weather]).to_not have_key(:precip_in)
+      expect(json_response[:data][:attributes][:current_weather]).to_not have_key(:cloud)
+      expect(json_response[:data][:attributes][:current_weather]).to_not have_key(:feelslike_c)
+      expect(json_response[:data][:attributes][:current_weather]).to_not have_key(:vis_km)
+      expect(json_response[:data][:attributes][:current_weather]).to_not have_key(:gust_mph)
+      expect(json_response[:data][:attributes][:current_weather]).to_not have_key(:gust_kph)
+    end
+  end
+
+  context 'sad path' do
+    it 'should return an error if no location is given', :vcr do
+      location_city = ''
+      location_state = ''
+      get "/api/v0/forecast?location=#{location_city},#{location_state}"
+
+      json_response = JSON.parse(response.body, symbolize_names: true)
+      
+      expect(response.status).to eq(400)      
+      expect(json_response[:error]).to eq("Please provide a valid location")
     end
   end
 end
