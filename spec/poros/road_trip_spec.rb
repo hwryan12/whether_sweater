@@ -30,6 +30,7 @@ RSpec.describe RoadTrip do
 
   describe 'instantiation' do
     let!(:road_trip) { RoadTrip.new(directions_data, forecast_data) }
+    
     it 'exists' do
       expect(road_trip).to be_a(RoadTrip)
       expect(road_trip.id).to eq(nil)

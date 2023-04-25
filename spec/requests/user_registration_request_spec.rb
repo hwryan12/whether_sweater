@@ -46,6 +46,7 @@ RSpec.describe 'POST /api/v0/users', type: :request do
         }
       }
     end
+    
     it 'returns a 422 code and an error message when the passwords do not match' do
       post '/api/v0/users', params: user_params, headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' }, as: :json
   
@@ -67,6 +68,7 @@ RSpec.describe 'POST /api/v0/users', type: :request do
         }
       }
     end
+    
     it 'returns a 422 code and an error message when the email already exists' do
       post '/api/v0/users', params: user_params, headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' }, as: :json
   

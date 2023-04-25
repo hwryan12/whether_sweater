@@ -5,6 +5,7 @@ RSpec.describe RoadTripFacade, type: :facade do
     describe '#get_road_trip' do
       let!(:origin) { 'Denver, CO' }
       let!(:destination) { 'Pueblo, CO' }
+      
       it 'returns a road trip object' do
         VCR.use_cassette('road_trip_facade') do
           road_trip = RoadTripFacade.new.get_road_trip(origin, destination)
