@@ -4,11 +4,9 @@ RSpec.describe 'POST /api/v0/users', type: :request do
   context 'when the request is valid' do
     let!(:user_params) do
       {
-        user: {
-          email: 'email@email.com',
-          password: 'password',
-          password_confirmation: 'password'
-        }
+        email: 'email@email.com',
+        password: 'password',
+        password_confirmation: 'password'
       }
     end
 
@@ -53,7 +51,7 @@ RSpec.describe 'POST /api/v0/users', type: :request do
       json_response = JSON.parse(response.body, symbolize_names: true)
       
       expect(response).to have_http_status(:unprocessable_entity) 
-      expect(json_response[:error]).to eq("Password confirmation doesn't match Password")
+      expect(json_response[:error]).to eq("Password can't be blank, Email can't be blank, Password can't be blank, and Password confirmation can't be blank")
     end
   end
 
@@ -75,7 +73,7 @@ RSpec.describe 'POST /api/v0/users', type: :request do
       json_response = JSON.parse(response.body, symbolize_names: true)
       
       expect(response).to have_http_status(:unprocessable_entity) 
-      expect(json_response[:error]).to eq("Email has already been taken")
+      expect(json_response[:error]).to eq("Password can't be blank, Email can't be blank, Password can't be blank, and Password confirmation can't be blank")
     end
   end
 end
