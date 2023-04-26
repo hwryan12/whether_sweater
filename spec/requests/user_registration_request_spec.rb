@@ -19,7 +19,7 @@ RSpec.describe 'POST /api/v0/users', type: :request do
       expect(response.content_type).to eq('application/json; charset=utf-8')
 
       json_response = JSON.parse(response.body, symbolize_names: true)
-      
+
       expect(json_response).to be_a(Hash)
       expect(json_response).to have_key(:data)
       expect(json_response[:data]).to be_a(Hash)
