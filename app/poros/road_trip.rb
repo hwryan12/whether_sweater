@@ -6,22 +6,20 @@ class RoadTrip
               :travel_time,
               :weather_at_eta
   
-  def initialize(directions, forecast)
+  def initialize(origin, destination, directions, forecast)
     @id = nil
-    @type = 'road_trip'
-    @start_city = directions[:route][:locations][0][:adminArea5] + ', ' + directions[:route][:locations][0][:adminArea3]
-    @end_city = directions[:route][:locations][1][:adminArea5] + ', ' + directions[:route][:locations][1][:adminArea3]
-    @travel_time = directions[:route][:formattedTime]
-    @weather_at_eta = format_forcast(forecast)
-  end
-
-  private
-
-  def format_forcast(forecast)
-    {
-      datetime: forecast[:time],
-      temperature: forecast[:temp_f],
-      condition: forecast[:condition][:text]
-    }
+    @start_city = origin
+    @end_city = destination
+    if directions.nil? && forecast.nil?
+      @travel_time = "impossible"
+      @weather_at_eta = {}
+    else
+      @travel_time = directions[:route][:formattedTime]
+      @weather_at_eta = {
+        datetime: forecast[:time],
+        temperature: forecast[:temp_f],
+        condition: forecast[:condition][:text]
+      }
+    end
   end
 end

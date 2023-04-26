@@ -7,6 +7,7 @@ class GeocodeService
     location_data = get_location(location)
     location_data[:results].first[:locations].first[:latLng]
   end
+  
   private
 
   def conn

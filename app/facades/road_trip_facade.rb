@@ -1,9 +1,13 @@
 class RoadTripFacade
   def get_road_trip(origin, destination)
     directions = DirectionsService.new.get_directions(origin, destination)
-    arrival_time = arrival_time(directions[:route][:formattedTime])
-    forecast = get_weather_at_destination(destination, arrival_time)
-    RoadTrip.new(directions, forecast)
+    if directions[:info][:statuscode] == 402 && directions[:info][:messages].include?("We are unable to route with the given locations.")
+      RoadTrip.new(origin, destination, nil, nil)
+    else
+      eta = arrival_time(directions[:route][:formattedTime])
+      forecast = get_weather_at_destination(destination, eta)
+      RoadTrip.new(origin, destination, directions, forecast)
+    end
   end
 
   private
